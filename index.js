@@ -157,13 +157,13 @@ function update(timePassedSinceLastRender) {
             if(everyParticle.x + everyParticle.width + 50 > CONFIG.width || everyParticle.x + everyParticle.width / 2 - 40 < everyParticle.width) {
                 particlesActive.splice(positionOfParticle, 1)
 
-                creatingExplosion(everyParticle.x, everyParticle.y)
+                creatingExplosion(everyParticle.x, everyParticle.y, timePassedSinceLastRender)
             }
             // Bottom and Top Wall Collision
             else if(everyParticle.y + everyParticle.height + 30 > CONFIG.height || everyParticle.y + everyParticle.height < 50) {
                 particlesActive.splice(positionOfParticle, 1)
 
-                creatingExplosion(everyParticle.x, everyParticle.y)
+                creatingExplosion(everyParticle.x, everyParticle.y, timePassedSinceLastRender)
             }
             // If there is no collision, then disappear
             else if(everyParticle.y - everyParticle.whereShadow + 5 > 0) {
@@ -175,7 +175,7 @@ function update(timePassedSinceLastRender) {
                 if(checkCollisionBetween(everyParticle, everyRock)) {
                     particlesActive.splice(positionOfParticle, 1)
                     
-                    creatingExplosion(everyParticle.x, everyParticle.y)
+                    creatingExplosion(everyParticle.x, everyParticle.y, timePassedSinceLastRender)
                 }
             })
             
@@ -184,7 +184,7 @@ function update(timePassedSinceLastRender) {
                 if(checkCollisionBetween(everyParticle, everyEnemy) && !(everyEnemy.ifDead)) {
                     particlesActive.splice(positionOfParticle, 1)
                     
-                    creatingExplosion(everyParticle.x, everyParticle.y)
+                    creatingExplosion(everyParticle.x, everyParticle.y, timePassedSinceLastRender)
                     
                     if(everyEnemy.lives <= 1) {
                         everyEnemy.ifDead = true
@@ -208,7 +208,7 @@ function update(timePassedSinceLastRender) {
                 }
             })
             
-            everyParticle.update()
+            everyParticle.update(timePassedSinceLastRender)
         })
     }
 }
@@ -254,12 +254,12 @@ function checkCollisionBetween(gameObjectA, gameObjectB) {
 
 
 // Creating the explosion
-function creatingExplosion(whereX, whereY) {
+function creatingExplosion(whereX, whereY, timePassedSinceLastRender) {
     for(let i = 0; i < 20; ++ i) {
         let dx = (Math.random() - 0.5) * (Math.random() * 6)
         let dy = (Math.random() - 0.5) * (Math.random() * 6)
         let radius = Math.random() * 5
-        let particle = new Explosion(context, whereX, whereY, radius, dx, dy)
+        let particle = new Explosion(context, whereX, whereY, radius, dx, dy, timePassedSinceLastRender)
           
         particles.push(particle)
     }

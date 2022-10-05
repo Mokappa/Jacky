@@ -1,12 +1,11 @@
 import GameObject from "./GameObject.js"
 
-
 class Particles extends GameObject {
     constructor(context, x, y, width, height, CONFIG, direction) {
         super(context, x, y, width, height, CONFIG)
-        this.xSpeed = 10
-        this.ySpeed = 2
-        this.acceleration = 9.81/10
+        this.xSpeed = 4
+        this.ySpeed = 0.2
+        this.acceleration = 0.0981
 
         if(direction === 0) {
             this.direction = 1
@@ -17,10 +16,10 @@ class Particles extends GameObject {
 
         // Setting the speed in relation to the direction
         if(this.direction === 1 || this.direction === -1) {
-            this.ySpeed = 2
+            this.ySpeed = 0.2
         }
         else if(this.direction === 2 || this.direction === -2) {
-            this.ySpeed = 8
+            this.ySpeed = 4
         }
 
         // Positioning the Particle when you shoot
@@ -50,7 +49,7 @@ class Particles extends GameObject {
 
     }
 
-    update() {
+    update(timePassedSinceLastRender) {
         if(this.direction === 2) {
             this.y = this.y - this.ySpeed
 
@@ -59,7 +58,7 @@ class Particles extends GameObject {
             if(Math.abs(this.initialY - this.y) > 170) {
                 this.particleIsFast = true
                 
-                this.shadowYSpeed = this.shadowYSpeed + this.acceleration
+                this.shadowYSpeed = this.shadowYSpeed + this.acceleration * timePassedSinceLastRender
             }
         }
         else if(this.direction === -2) {
@@ -68,7 +67,7 @@ class Particles extends GameObject {
             if(Math.abs(this.initialY - this.y) > 220) {
                 this.particleIsFast = true
                 
-                this.ySpeed = this.ySpeed + this.acceleration
+                this.ySpeed = this.ySpeed + this.acceleration * timePassedSinceLastRender
             }
         }
         else if(this.direction === 1) {
@@ -78,7 +77,7 @@ class Particles extends GameObject {
                 this.xSpeed = 4
                 
                 this.y = this.y + this.ySpeed
-                this.ySpeed = this.ySpeed + this.acceleration
+                this.ySpeed = this.ySpeed + this.acceleration * timePassedSinceLastRender
             }
         }
         else if(this.direction === -1) {
@@ -88,7 +87,7 @@ class Particles extends GameObject {
                 this.xSpeed = 4
             
                 this.y = this.y + this.ySpeed
-                this.ySpeed = this.ySpeed + this.acceleration
+                this.ySpeed = this.ySpeed + this.acceleration * timePassedSinceLastRender
             }
         }
     }

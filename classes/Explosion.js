@@ -1,5 +1,5 @@
 class Explosion {
-    constructor(context, x, y, radius, dx, dy) {
+    constructor(context, x, y, radius, dx, dy, timePassedSinceLastRender) {
         this.context = context
         this.x = x;
         this.y = y;
@@ -7,6 +7,8 @@ class Explosion {
         this.dx = dx;
         this.dy = dy;
         this.opacity = 1;
+        this.timePassedSinceLastRender = timePassedSinceLastRender
+        this.velocity = 0.2
     }
 
     render() {
@@ -31,9 +33,9 @@ class Explosion {
     update() {
         this.render()
 
-        this.opacity -= 0.05
-        this.x += this.dx
-        this.y += this.dy
+        this.opacity -= 0.024
+        this.x += this.dx * this.timePassedSinceLastRender * this.velocity
+        this.y += this.dy * this.timePassedSinceLastRender * this.velocity
     }
 }
 

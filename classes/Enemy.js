@@ -9,7 +9,7 @@ class Enemy extends GameObject {
         this.dy = 0
         this.state = 'walk'
         this.lastDirectionX = 1
-        this.velocity = 2
+        this.velocity = 0.2
         this.lives = 2
         this.opacity = 1
         this.ifDead = ifDead
@@ -62,8 +62,8 @@ class Enemy extends GameObject {
             this.distance = Math.sqrt((this.dx * this.dx) + (this.dy * this.dy))
             
             // Calculating the cos and sin for the angle to determine where to go
-            this.speedX = this.velocity * (this.dx / this.distance)
-            this.speedY = this.velocity * (this.dy / this.distance)
+            this.speedX = timePassedSinceLastRender * this.velocity * (this.dx / this.distance)
+            this.speedY = timePassedSinceLastRender * this.velocity * (this.dy / this.distance)
         
             this.x += this.speedX
             this.y += this.speedY
