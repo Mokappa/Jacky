@@ -4,7 +4,6 @@ import Explosion from './classes/Explosion.js'
 
 // Global Variables
 let context
-let lastTickTimestamp = 0
 let player
 let enemies = []
 let rocksOnMap = []
@@ -34,8 +33,6 @@ window.addEventListener('load', function (e) {
     canvas.setAttribute('height', CONFIG.height)
 
     player = new Player(context, CONFIG.width / 2, CONFIG.height / 2, 70, 100, CONFIG)
-    
-    lastTickTimestamp = performance.now()
 })
 
 
@@ -77,13 +74,11 @@ window.addEventListener('keydown', function (e) {
 
 // The Game Loop
 function gameLoop() {
-    let timePassedSinceLastRender = performance.now() - lastTickTimestamp
+    let timePassedSinceLastRender = 7
 
     update(timePassedSinceLastRender)
     render()
     explode()
-
-    lastTickTimestamp = performance.now()
 
     requestAnimationFrame(gameLoop)
 }
